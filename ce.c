@@ -40,13 +40,13 @@ inline double ce_smoothed(const double* restrict z, size_t C, size_t y_idx, cons
 
 // single label -> binary
 double bce(const double x, const double y) {
-    double ax = fabs(x);
+    double ax = (x>=0) ? x : -x;
     // BCE = max(x,0) - xy + log(1+exp(-|x|))
     return (x>0 ? x : 0.0) - x*(double)y+log1p(exp(-ax));
 }
 
 inline double softplus_stable(const double x) {
-    const double a = fabs(x);
+    const double a = (x>=0) ? x : -x;
     return (x > 0 ? x : 0.0) + log1p(exp(-a));
 }
 
